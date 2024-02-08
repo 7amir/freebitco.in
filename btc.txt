@@ -1,0 +1,70 @@
+// ==UserScript==
+// @name         Freebitcoin claim automatically FUN and BTC
+// @namespace    http://moonfo.com/
+// @version      4.7
+// @description  You must create an account on freebitco to use this script https://freebitco.in/?r=53012501
+// @author       Amir
+// @match        https://freebitco.in/?op=home
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=freebitco.in
+// @grant        none
+// @require      none
+// @license      GPL-3.0
+// ==/UserScript==
+
+(function () {
+    'use strict';
+    var body = document.body;
+    var points = {};
+    var count_min = 1;
+    var reward = {};
+
+    reward.select = function () {
+        reward.points = parseInt(document.querySelector('.user_reward_points').textContent.replace(',', ""));
+        reward.bonustime = {};
+        var bonusContainer = document.getElementById("bonus_container_fun_token");
+        if (bonusContainer) {
+            reward.bonustime.text = document.getElementById('bonus_span_fun_token').textContent;
+            reward.bonustime.hour = parseInt(reward.bonustime.text.split(":")[0]);
+            reward.bonustime.min = parseInt(reward.bonustime.text.split(":")[1]);
+            reward.bonustime.sec = parseInt(reward.bonustime.text.split(":")[2]);
+            reward.bonustime.current = reward.bonustime.hour * 3600 + reward.bonustime.min * 60 + reward.bonustime.sec;
+        } else {
+            reward.bonustime.current = 0;
+        }
+        console.log(reward.bonustime.current);
+        if (reward.bonustime.current !== 0) {
+            console.log(reward.bonustime.current);
+        } else {
+            // RedeemRPProduct function is not defined in your code. Define it or include the necessary library.
+            // RedeemRPProduct('fun_token_5');
+        }
+    };
+    setTimeout(reward.select, 1000);
+    setInterval(reward.select, 60000);
+
+    console.log("Status: Page loaded.");
+
+    setTimeout(function () {
+        document.getElementById('free_play_form_button').click();
+        console.log("Status: Button ROLL clicked.");
+    }, random(2000, 4000));
+
+    setInterval(function () {
+        console.log("Status: Elapsed time " + count_min + " minutes");
+        count_min = count_min + 1;
+    }, 60000);
+
+    setTimeout(function () {
+        document.querySelector('.close-reveal-modal').click();
+        console.log("Status: Button CLOSE POPUP clicked.");
+    }, random(12000, 18000));
+
+    setInterval(function () {
+        document.getElementById('free_play_form_button').click();
+        console.log("Status: Button ROLL clicked again.");
+    }, random(3605000, 3615000));
+
+    function random(min, max) {
+        return min + (max - min) * Math.random();
+    }
+})();
